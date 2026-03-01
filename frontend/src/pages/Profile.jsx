@@ -71,13 +71,36 @@ function Profile() {
                         </div>
                     </div>
 
-                    <button
-                        onClick={handleLogout}
-                        className="btn-primary"
-                        style={{ width: '100%', justifyContent: 'center', padding: '15px' }}
-                    >
-                        Sign Out of MovieFlix
-                    </button>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                        <button
+                            onClick={handleLogout}
+                            className="btn-primary"
+                            style={{ width: '100%', justifyContent: 'center', padding: '15px' }}
+                        >
+                            Sign Out of MovieFlix
+                        </button>
+
+                        <button
+                            onClick={() => navigate('/')}
+                            style={{
+                                width: '100%',
+                                justifyContent: 'center',
+                                padding: '15px',
+                                background: 'transparent',
+                                border: '1px solid rgba(255,255,255,0.3)',
+                                color: 'white',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                                fontSize: '1rem',
+                                fontWeight: 500,
+                                transition: 'all 0.2s ease'
+                            }}
+                            onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                            onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+                        >
+                            Go Back
+                        </button>
+                    </div>
                 </div>
             </div>
         </>
