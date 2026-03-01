@@ -56,7 +56,7 @@ function Navbar() {
             <li className="navbar__menuItem active">Home</li>
             <li className="navbar__menuItem">Movies</li>
             <li className="navbar__menuItem">Series</li>
-            <li className="navbar__menuItem">My List</li>
+            <li className="navbar__menuItem" onClick={() => alert("The Watchlist feature is coming soon!")} style={{ cursor: 'pointer' }}>My List</li>
           </ul>
         </div>
         <div className="navbar__right">
@@ -123,7 +123,10 @@ function Navbar() {
                       <Link to="/profile" style={{ color: 'white', padding: '10px 15px', textDecoration: 'none', borderBottom: '1px solid #333', fontSize: '0.9rem' }}>
                         Profile
                       </Link>
-                      <div style={{ color: 'white', padding: '10px 15px', borderBottom: '1px solid #333', fontSize: '0.9rem', cursor: 'pointer' }}>
+                      <div
+                        onClick={() => alert("The Watchlist feature is coming soon!")}
+                        style={{ color: 'white', padding: '10px 15px', borderBottom: '1px solid #333', fontSize: '0.9rem', cursor: 'pointer' }}
+                      >
                         Watchlist
                       </div>
                       <div onClick={handleLogout} style={{ color: 'white', padding: '10px 15px', fontSize: '0.9rem', cursor: 'pointer' }}>
