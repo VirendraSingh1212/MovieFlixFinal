@@ -28,7 +28,7 @@ const Signup = () => {
 
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:5005/api/auth/register', {
+            const response = await fetch('https://movieflixfinal-production.up.railway.app/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, email, phone: phoneNumber, password }),
