@@ -1,6 +1,8 @@
 .row {
   color: white;
   margin-bottom: 40px;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .row__title {

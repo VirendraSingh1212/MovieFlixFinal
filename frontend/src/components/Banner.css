@@ -49,7 +49,8 @@
   top: 35%;
   z-index: 2;
   left: var(--padding-x);
-  max-width: 600px;
+  right: var(--padding-x);
+  width: calc(100% - (var(--padding-x) * 2));
 }
 
 /* Meta info row */
@@ -93,7 +94,7 @@
   line-height: 1.5;
   color: #d2d2d2;
   margin-bottom: 24px;
-  max-width: 480px;
+  width: 100%;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   line-clamp: 3;
@@ -197,6 +198,8 @@
 
   .banner__contents {
     top: 38%;
+    max-width: 600px;
+    width: auto;
   }
 
   .banner__title {
