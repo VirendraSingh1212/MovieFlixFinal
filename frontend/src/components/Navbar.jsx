@@ -6,6 +6,7 @@ import './Navbar.css';
 function Navbar() {
   const [show, setShow] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const navigate = useNavigate();
 
   // Get user from localStorage
@@ -89,12 +90,55 @@ function Navbar() {
                   <path d="m21 21-4.35-4.35"></path>
                 </svg>
               </button>
-              <button className="navbar__icon" aria-label="Notifications">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-                  <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-                </svg>
-              </button>
+              <div style={{ position: 'relative' }}>
+                <button
+                  className="navbar__icon"
+                  aria-label="Notifications"
+                  onClick={() => setNotificationsOpen(!notificationsOpen)}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+                  </svg>
+                </button>
+
+                <AnimatePresence>
+                  {notificationsOpen && (
+                    <motion.div
+                      className="navbar__dropdownMenu"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      style={{
+                        position: 'absolute',
+                        top: '100%',
+                        right: 0,
+                        marginTop: '15px',
+                        background: 'rgba(0,0,0,0.9)',
+                        border: '1px solid #333',
+                        borderRadius: '4px',
+                        width: '280px',
+                        padding: '16px',
+                        zIndex: 1000,
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                        color: 'white'
+                      }}
+                    >
+                      <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                        <div style={{ fontSize: '1.5rem' }}>🔔</div>
+                        <div>
+                          <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: '#e5e5e5' }}>
+                            Welcome to MovieFlix, {user.uname || user.username}!
+                          </p>
+                          <p style={{ margin: '4px 0 0', fontSize: '0.8rem', color: '#b3b3b3' }}>
+                            Start watching your favorite movies and series today.
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
               <div
                 className="navbar__profile"
