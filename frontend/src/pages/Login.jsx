@@ -21,7 +21,8 @@ const Login = () => {
 
         setLoading(true);
         try {
-            const response = await fetch('https://movieflixfinal-production.up.railway.app/api/auth/login', {
+            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5005';
+            const response = await fetch(`${API_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
