@@ -53,9 +53,21 @@ function Navbar() {
             <h1 className="navbar__logo">MovieFlix</h1>
           </Link>
           <ul className="navbar__menu">
-            <li className="navbar__menuItem active">Home</li>
-            <li className="navbar__menuItem">Movies</li>
-            <li className="navbar__menuItem">Series</li>
+            <li className="navbar__menuItem active" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ cursor: 'pointer' }}>Home</li>
+            <li className="navbar__menuItem" onClick={() => {
+              const el = document.getElementById('row-action-movies');
+              if (el) {
+                const y = el.getBoundingClientRect().top + window.scrollY - 100;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+              }
+            }} style={{ cursor: 'pointer' }}>Movies</li>
+            <li className="navbar__menuItem" onClick={() => {
+              const el = document.getElementById('row-movieflix-originals');
+              if (el) {
+                const y = el.getBoundingClientRect().top + window.scrollY - 100;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+              }
+            }} style={{ cursor: 'pointer' }}>Series</li>
             <li className="navbar__menuItem" onClick={() => alert("The Watchlist feature is coming soon!")} style={{ cursor: 'pointer' }}>My List</li>
           </ul>
         </div>
