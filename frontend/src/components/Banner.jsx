@@ -70,9 +70,9 @@ const Banner = memo(function Banner() {
         setLoading(false);
         return;
       }
-      
+
       const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
-      
+
       if (!API_KEY) {
         const randomMovie = mockMovies[Math.floor(Math.random() * mockMovies.length)];
         const randomBackdrop = highQualityBackdrops[Math.floor(Math.random() * highQualityBackdrops.length)];
@@ -83,7 +83,7 @@ const Banner = memo(function Banner() {
         setLoading(false);
         return;
       }
-      
+
       try {
         setLoading(true);
         const request = await axios.get(requests.fetchNetflixOriginals);
@@ -126,13 +126,13 @@ const Banner = memo(function Banner() {
     <header
       className={`banner ${imageLoaded ? 'banner--loaded' : 'banner--loading'}`}
       style={{
-        backgroundImage: backdropUrl 
+        backgroundImage: backdropUrl
           ? `url("${backdropUrl}")`
           : 'linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%)',
       }}
     >
       <div className="banner__gradient" />
-      <motion.div 
+      <motion.div
         className="banner__contents"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -142,7 +142,7 @@ const Banner = memo(function Banner() {
         <div className="banner__meta">
           <span className="banner__rating">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="#e50914">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
             {movie?.imdbRating || '8.5'}
           </span>
@@ -153,25 +153,25 @@ const Banner = memo(function Banner() {
 
         {/* Title */}
         <h1 className="banner__title">
-          {movie?.Title}
+          {movie?.Title || movie?.title || movie?.name}
         </h1>
 
         {/* Description */}
         <p className="banner__description">
-          {truncate(movie?.Plot, 180)}
+          {truncate(movie?.Plot || movie?.overview, 180)}
         </p>
 
         {/* CTAs */}
         <div className="banner__buttons">
           <button className="btn-primary banner__playBtn">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7z"/>
+              <path d="M8 5v14l11-7z" />
             </svg>
             Play
           </button>
           <button className="btn-secondary banner__listBtn">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
             </svg>
             My List
           </button>
@@ -187,7 +187,7 @@ const Banner = memo(function Banner() {
           ))}
         </div>
       </motion.div>
-      
+
       <div className="banner__fadeBottom" />
     </header>
   );

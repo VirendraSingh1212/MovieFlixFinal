@@ -17,13 +17,19 @@ const apiCache = new Map();
 // Security: Sanitize movie data
 const sanitizeMovieData = (movie) => {
   if (!movie || typeof movie !== 'object') return null;
+
+  // Handle TMDB-style mock data vs OMDb-style real data
+  const title = movie.Title || movie.title || movie.name || '';
+  const poster = movie.Poster || (movie.poster_path ? `${tmdbImageBaseURL}${movie.poster_path}` : null);
+  const id = movie.imdbID || movie.id || Math.random().toString();
+
   return {
     ...movie,
-    Title: movie.Title?.toString().slice(0, 200) || '',
-    Year: movie.Year?.toString().slice(0, 20) || '',
-    imdbID: movie.imdbID?.toString().slice(0, 20) || '',
-    Type: movie.Type?.toString().slice(0, 20) || '',
-    Poster: movie.Poster?.match(/^https?:\/\//i) ? movie.Poster : null,
+    Title: title.toString().slice(0, 200),
+    Year: (movie.Year || movie.release_date || '').toString().slice(0, 20),
+    imdbID: id.toString().slice(0, 20),
+    Type: (movie.Type || (movie.poster_path ? 'movie' : '')).toString().slice(0, 20),
+    Poster: poster?.match(/^https?:\/\//i) ? poster : null,
   };
 };
 
@@ -55,7 +61,7 @@ const Row = memo(function Row({ title, fetchUrl, isLargeRow = false, onMovieClic
 
   useEffect(() => {
     if (!isVisible) return;
-    
+
     async function fetchData() {
       // Check cache first
       if (apiCache.has(fetchUrl)) {
@@ -64,21 +70,21 @@ const Row = memo(function Row({ title, fetchUrl, isLargeRow = false, onMovieClic
         setLoading(false);
         return;
       }
-      
+
       const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
-      
+
       if (!API_KEY) {
         let mockData = mockMovies;
         if (title.includes('Trending')) mockData = mockTrending;
         else if (title.includes('Action')) mockData = mockAction;
         else if (title.includes('Comedy')) mockData = mockComedy;
-        
+
         const sanitized = mockData.map(sanitizeMovieData).filter(Boolean);
         setMovies(sanitized);
         setLoading(false);
         return;
       }
-      
+
       try {
         setLoading(true);
         const request = await axios.get(fetchUrl);
@@ -95,7 +101,7 @@ const Row = memo(function Row({ title, fetchUrl, isLargeRow = false, onMovieClic
         if (title.includes('Trending')) mockData = mockTrending;
         else if (title.includes('Action')) mockData = mockAction;
         else if (title.includes('Comedy')) mockData = mockComedy;
-        
+
         const sanitized = mockData.map(sanitizeMovieData).filter(Boolean);
         setMovies(sanitized);
         setError(null);
@@ -153,7 +159,7 @@ const Row = memo(function Row({ title, fetchUrl, isLargeRow = false, onMovieClic
   }
 
   return (
-    <motion.div 
+    <motion.div
       id={rowId}
       className="row"
       initial={{ opacity: 0 }}
@@ -189,8 +195,8 @@ const Row = memo(function Row({ title, fetchUrl, isLargeRow = false, onMovieClic
             <SwiperSlide key={movie.imdbID}>
               <motion.div
                 className={`row__posterContainer ${isLargeRow ? 'row__posterLarge' : ''}`}
-                whileHover={{ 
-                  scale: 1.06, 
+                whileHover={{
+                  scale: 1.06,
                   y: -6,
                   transition: { duration: 0.25, ease: 'easeOut' }
                 }}
